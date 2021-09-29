@@ -85,10 +85,10 @@ stages:
               "name": "CONNECTION_STRING",
               "value": "$(connectionString)",
               "slotSetting": false
-             }
+             },
              {
               "name": "MSDEPLOY_RENAME_LOCKED_FILES",
-              "value": "1",
+              "value": 1,
               "slotSetting": false
              }             
           ]
