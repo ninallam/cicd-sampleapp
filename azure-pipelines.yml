@@ -64,7 +64,7 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
         overrideParameters: '-webAppName nodejscicd -hostingPlanName nodejscicd-host -appInsightsLocation "East US" -databaseAccountId nodejscicd-db -databaseAccountLocation eastus'
-        deploymentMode: 'Validation'
+        deploymentMode: 'Incremental'
         deploymentOutputs: 'deploymentOutputs'
     
     - task: PowerShell@2
