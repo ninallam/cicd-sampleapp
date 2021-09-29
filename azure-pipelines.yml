@@ -86,6 +86,11 @@ stages:
               "value": "$(connectionString)",
               "slotSetting": false
              }
+             {
+              "name": "MSDEPLOY_RENAME_LOCKED_FILES",
+              "value": 1,
+              "slotSetting": false
+             }             
           ]
     - task: DownloadPipelineArtifact@2
       inputs:
