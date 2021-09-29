@@ -52,7 +52,7 @@ stages:
       inputs:
         versionSpec: '14.15.1'
       displayName: 'Install Node.js'
-    
+
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
         deploymentScope: 'Resource Group'
@@ -64,7 +64,7 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
         overrideParameters: '-webAppName nodejscicd -hostingPlanName nodejscicd-host -appInsightsLocation "East US" -databaseAccountId nodejscicd-db -databaseAccountLocation eastus'
-        deploymentMode: 'Incremental'
+        deploymentMode: 'Validation'
         deploymentOutputs: 'deploymentOutputs'
     
     - task: PowerShell@2
