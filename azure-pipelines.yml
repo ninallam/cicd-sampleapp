@@ -59,7 +59,7 @@ stages:
         azureResourceManagerConnection: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
         subscriptionId: 'afc11291-9826-46be-b852-70349146ddf8'
         action: 'Create Or Update Resource Group'
-        resourceGroupName: 'cicd-sampleapp'
+        resourceGroupName: 'cicd-sampleapp-rg'
         location: 'East US'
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
@@ -74,7 +74,19 @@ stages:
           $deploymentOutputs=(ConvertFrom-Json '$(deploymentOutputs)')
           $connectionString=$($deploymentOutputs.azureCosmosDBAccountKeys.value.connectionStrings[0].connectionString)
           Write-Host "##vso[task.setvariable variable=connectionString;issecret=true;]$connectionString"
-    
+    - task: AzureAppServiceSettings@1
+      inputs:
+        azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
+        appName: 'cicd-sampleapp'
+        resourceGroupName: 'cicd-sampleapp-rg'
+        appSettings: |
+          [
+             {
+              "name": "CONNECTION_STRING",
+              "value": $(connectionString),
+              "slotSetting": false
+             }
+          ]
     - task: DownloadPipelineArtifact@2
       inputs:
         artifact: drop
