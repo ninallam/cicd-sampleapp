@@ -103,6 +103,6 @@ stages:
         appType: 'webApp'
         WebAppName: 'nodejscicd'
         packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
-        enableCustomDeployment: true
-        DeploymentType: 'zipDeploy'
-        TakeAppOfflineFlag: false
+        # enableCustomDeployment: true
+        # DeploymentType: 'zipDeploy'
+        # TakeAppOfflineFlag: false
