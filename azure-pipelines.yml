@@ -56,11 +56,11 @@ stages:
         azureResourceManagerConnection: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
         subscriptionId: 'afc11291-9826-46be-b852-70349146ddf8'
         action: 'Create Or Update Resource Group'
-        resourceGroupName: 'nodejscicd-rg'
+        resourceGroupName: 'ado-sampleapp-rg'
         location: 'East US'
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
-        overrideParameters: '-webAppName nodejscicd -hostingPlanName nodejscicd-host -appInsightsLocation "East US" -databaseAccountId nodejscicd-db -databaseAccountLocation eastus'
+        overrideParameters: '-webAppName ado-sampleapp -hostingPlanName ado-sampleapp-host -appInsightsLocation "East US" -databaseAccountId ado-sampleapp-db -databaseAccountLocation eastus'
         deploymentMode: 'Incremental'
         deploymentOutputs: 'deploymentOutputs'
     - task: PowerShell@2
@@ -73,8 +73,8 @@ stages:
     - task: AzureAppServiceSettings@1
       inputs:
         azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
-        appName: 'nodejscicd'
-        resourceGroupName: 'nodejscicd-rg'
+        appName: 'ado-sampleapp'
+        resourceGroupName: 'ado-sampleapp-rg'
         appSettings: |
           [
              {
@@ -96,7 +96,7 @@ stages:
         ConnectionType: 'AzureRM'
         azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
         appType: 'webApp'
-        WebAppName: 'nodejscicd'
+        WebAppName: 'ado-sampleapp'
         packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
         enableCustomDeployment: true
         DeploymentType: 'zipDeploy'
