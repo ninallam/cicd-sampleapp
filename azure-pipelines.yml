@@ -60,7 +60,7 @@ stages:
         location: 'East US'
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
-        overrideParameters: '-webAppName ado-sampleapp -hostingPlanName ado-sampleapp-host -appInsightsLocation "East US" -databaseAccountId ado-sampleapp-db -databaseAccountLocation eastus'
+        overrideParameters: '-webAppName ado-sampleapp -hostingPlanName ado-sampleapp-host -appInsightsLocation "East US" -databaseAccountId ado-sampleappdb -databaseAccountLocation eastus'
         deploymentMode: 'Incremental'
         deploymentOutputs: 'deploymentOutputs'
     - task: PowerShell@2
