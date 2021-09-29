@@ -3,6 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+
 trigger: none
 
 stages:
@@ -37,6 +38,7 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       artifact: drop
 
+
 - stage: DeployStaging
   displayName: Deploy to Pre Prod
   dependsOn: Build
@@ -46,9 +48,8 @@ stages:
     displayName: Deploy to Pre Prod
     pool:
       vmImage: windows-latest
-
+    
     steps:
-
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
         deploymentScope: 'Resource Group'
@@ -62,7 +63,6 @@ stages:
         overrideParameters: '-webAppName nodejscicd -hostingPlanName nodejscicd-host -appInsightsLocation "East US" -databaseAccountId nodejscicd-db -databaseAccountLocation eastus'
         deploymentMode: 'Incremental'
         deploymentOutputs: 'deploymentOutputs'
-    
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
@@ -91,7 +91,6 @@ stages:
     - task: DownloadPipelineArtifact@2
       inputs:
         artifact: drop
-
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
@@ -101,3 +100,4 @@ stages:
         packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
         enableCustomDeployment: true
         DeploymentType: 'zipDeploy'
+        TakeAppOfflineFlag: false
