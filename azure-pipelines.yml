@@ -48,10 +48,6 @@ stages:
       vmImage: windows-latest
 
     steps:
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '14.15.1'
-      displayName: 'Install Node.js'
 
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
@@ -103,6 +99,5 @@ stages:
         appType: 'webApp'
         WebAppName: 'nodejscicd'
         packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
-        # enableCustomDeployment: true
-        # DeploymentType: 'zipDeploy'
-        # TakeAppOfflineFlag: false
+        enableCustomDeployment: true
+        DeploymentType: 'zipDeploy'
