@@ -59,11 +59,11 @@ stages:
         azureResourceManagerConnection: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
         subscriptionId: 'afc11291-9826-46be-b852-70349146ddf8'
         action: 'Create Or Update Resource Group'
-        resourceGroupName: 'cicd-sampleapp'
+        resourceGroupName: 'nodejscicd-rg'
         location: 'East US'
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
-        overrideParameters: '-webAppName cicd-sampleapp -hostingPlanName cicd-sampleapp-host -appInsightsLocation "East US" -databaseAccountId cicd-sampleapp-db -databaseAccountLocation eastus'
+        overrideParameters: '-webAppName nodejscicd -hostingPlanName nodejscicd-host -appInsightsLocation "East US" -databaseAccountId nodejscicd-db -databaseAccountLocation eastus'
         deploymentMode: 'Incremental'
         deploymentOutputs: 'deploymentOutputs'
     
@@ -77,8 +77,8 @@ stages:
     - task: AzureAppServiceSettings@1
       inputs:
         azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
-        appName: 'cicd-sampleapp'
-        resourceGroupName: 'cicd-sampleapp'
+        appName: 'nodejscicd'
+        resourceGroupName: 'nodejscicd-rg'
         appSettings: |
           [
              {
@@ -96,7 +96,7 @@ stages:
         ConnectionType: 'AzureRM'
         azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
         appType: 'webApp'
-        WebAppName: 'cicd-sampleapp'
+        WebAppName: 'nodejscicd'
         packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
         enableCustomDeployment: true
         DeploymentType: 'zipDeploy'
