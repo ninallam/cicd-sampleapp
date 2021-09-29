@@ -59,7 +59,7 @@ stages:
         azureResourceManagerConnection: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
         subscriptionId: 'afc11291-9826-46be-b852-70349146ddf8'
         action: 'Create Or Update Resource Group'
-        resourceGroupName: 'cicd-sampleapp-rg'
+        resourceGroupName: 'cicd-sampleapp'
         location: 'East US'
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
@@ -78,7 +78,7 @@ stages:
       inputs:
         azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
         appName: 'cicd-sampleapp'
-        resourceGroupName: 'cicd-sampleapp-rg'
+        resourceGroupName: 'cicd-sampleapp'
         appSettings: |
           [
              {
