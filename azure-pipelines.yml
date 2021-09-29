@@ -74,3 +74,18 @@ stages:
           $deploymentOutputs=(ConvertFrom-Json '$(deploymentOutputs)')
           $connectionString=$($deploymentOutputs.azureCosmosDBAccountKeys.value.connectionStrings[0].connectionString)
           Write-Host "##vso[task.setvariable variable=connectionString;issecret=true;]$connectionString"
+    
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: drop
+
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
+        appType: 'webApp'
+        WebAppName: 'cicd-sampleapp'
+        packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
+        enableCustomDeployment: true
+        DeploymentType: 'zipDeploy'
+        TakeAppOfflineFlag: false
