@@ -53,14 +53,14 @@ stages:
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
         deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
+        azureResourceManagerConnection: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
         subscriptionId: 'afc11291-9826-46be-b852-70349146ddf8'
         action: 'Create Or Update Resource Group'
-        resourceGroupName: 'ado-sampleapp-rg'
+        resourceGroupName: 'demo-sampleapp-rg'
         location: 'East US'
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
-        overrideParameters: '-webAppName ado-sampleapp -hostingPlanName ado-sampleapp-host -appInsightsLocation "East US" -databaseAccountId ado-sampleappdb -databaseAccountLocation eastus'
+        overrideParameters: '-webAppName demo-sampleapp -hostingPlanName demo-sampleapp-host -appInsightsLocation "East US" -databaseAccountId ado-sampleappdb -databaseAccountLocation "East US"'
         deploymentMode: 'Incremental'
         deploymentOutputs: 'deploymentOutputs'
     - task: PowerShell@2
@@ -72,9 +72,9 @@ stages:
           Write-Host "##vso[task.setvariable variable=connectionString;issecret=true;]$connectionString"
     - task: AzureAppServiceSettings@1
       inputs:
-        azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
-        appName: 'ado-sampleapp'
-        resourceGroupName: 'ado-sampleapp-rg'
+        azureSubscription: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
+        appName: 'demo-sampleapp'
+        resourceGroupName: 'demo-sampleapp-rg'
         appSettings: |
           [
              {
@@ -94,9 +94,9 @@ stages:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: 'RMPM(afc11291-9826-46be-b852-70349146ddf8)'
+        azureSubscription: Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
         appType: 'webApp'
-        WebAppName: 'ado-sampleapp'
+        WebAppName: 'demo-sampleapp'
         packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
         enableCustomDeployment: true
         DeploymentType: 'zipDeploy'
