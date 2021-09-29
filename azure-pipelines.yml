@@ -54,7 +54,7 @@ stages:
       inputs:
         deploymentScope: 'Resource Group'
         azureResourceManagerConnection: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
-        subscriptionId: 'afc11291-9826-46be-b852-70349146ddf8'
+        subscriptionId: '7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a'
         action: 'Create Or Update Resource Group'
         resourceGroupName: 'demo-sampleapp-rg'
         location: 'East US'
@@ -63,6 +63,7 @@ stages:
         overrideParameters: '-webAppName demo-sampleapp -hostingPlanName demo-sampleapp-host -appInsightsLocation "East US" -databaseAccountId ado-sampleappdb -databaseAccountLocation "East US"'
         deploymentMode: 'Incremental'
         deploymentOutputs: 'deploymentOutputs'
+    
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
