@@ -94,7 +94,7 @@ stages:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
+        azureSubscription: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
         appType: 'webApp'
         WebAppName: 'demo-sampleapp'
         packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
