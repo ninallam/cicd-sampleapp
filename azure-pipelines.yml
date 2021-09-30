@@ -6,6 +6,11 @@
 
 trigger: none
 
+variables:
+  webAppName: 'demo-sampleapp'
+  serviceConnection: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
+  azureSubscriptionId: '7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a'
+
 stages:
 - stage: Build
   displayName: Build 
@@ -39,13 +44,13 @@ stages:
       artifact: drop
 
 
-- stage: DeployStaging
-  displayName: Deploy to Pre Prod
+- stage: Deploy
+  displayName: Deploy 
   dependsOn: Build
   condition: succeeded()
   jobs:
   - job: Deploy
-    displayName: Deploy to Pre Prod
+    displayName: Deploy
     pool:
       vmImage: windows-latest
     
@@ -53,14 +58,14 @@ stages:
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
         deploymentScope: 'Resource Group'
-        azureResourceManagerConnection: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
-        subscriptionId: '7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a'
+        azureResourceManagerConnection: $(serviceConnection)
+        subscriptionId: $(azureSubscriptionId)
         action: 'Create Or Update Resource Group'
-        resourceGroupName: 'demo-sampleapp-rg'
+        resourceGroupName: '$(webAppName)-rg'
         location: 'East US'
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/windows-webapp-template.json'
-        overrideParameters: '-webAppName demo-sampleapp -hostingPlanName demo-sampleapp-host -appInsightsLocation "East US" -databaseAccountId ado-sampleappdb -databaseAccountLocation "East US"'
+        overrideParameters: '-webAppName $(webAppName) -hostingPlanName $(webAppName)-host -appInsightsLocation "East US" -databaseAccountId $(webAppName)db -databaseAccountLocation "East US"'
         deploymentMode: 'Incremental'
         deploymentOutputs: 'deploymentOutputs'
     
@@ -73,9 +78,9 @@ stages:
           Write-Host "##vso[task.setvariable variable=connectionString;issecret=true;]$connectionString"
     - task: AzureAppServiceSettings@1
       inputs:
-        azureSubscription: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
-        appName: 'demo-sampleapp'
-        resourceGroupName: 'demo-sampleapp-rg'
+        azureSubscription: $(serviceConnection)
+        appName: '$(webAppName)'
+        resourceGroupName: '$(webAppName)-rg'
         appSettings: |
           [
              {
@@ -95,9 +100,9 @@ stages:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
+        azureSubscription: $(serviceConnection)
         appType: 'webApp'
-        WebAppName: 'demo-sampleapp'
+        WebAppName: $(webAppName)
         packageForLinux: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
         enableCustomDeployment: true
         DeploymentType: 'zipDeploy'
