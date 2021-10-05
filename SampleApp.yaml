@@ -1,0 +1,6 @@
+version: v0.1
+testName: SampleApp
+testPlan: SampleApp.jmx
+description: 'SampleApp Test Run'
+engineInstances: 1
+engineSize: M
