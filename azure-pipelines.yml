@@ -10,6 +10,8 @@ variables:
   webAppName: 'demo-sampleapp'
   serviceConnection: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
   azureSubscriptionId: '7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a'
+  loadTestResource: 'nikita-sampleapp'
+  loadTestResourceGroup: 'nikita-sample-rg'
 
 stages:
 - stage: Build
@@ -107,3 +109,4 @@ stages:
         enableCustomDeployment: true
         DeploymentType: 'zipDeploy'
         TakeAppOfflineFlag: false
+
