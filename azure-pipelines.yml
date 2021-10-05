@@ -110,3 +110,22 @@ stages:
         DeploymentType: 'zipDeploy'
         TakeAppOfflineFlag: false
 
+- stage: LoadTest
+  displayName: Load Test
+  # dependsOn: DeployStaging
+  # condition: succeeded()
+  jobs:
+  - job: LoadTest
+    displayName: Load Test
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: AzureLoadTest@1
+      inputs:
+        azureSubscription: 'Cloud-Native-Testing-IDC-Test(7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a)'
+        YAMLFilePath: 'Load Test/SampleApp.yaml'
+        resourceGroup: '$(loadTestResourceGroup)'
+        loadtestResource: '$(loadTestResource)'
+
+    - publish: $(System.DefaultWorkingDirectory)/dropResults
+      artifact: loadResults
