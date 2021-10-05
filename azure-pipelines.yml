@@ -112,7 +112,7 @@ stages:
 
 - stage: LoadTest
   displayName: Load Test
-  dependsOn: DeployStaging
+  dependsOn: Deploy
   condition: succeeded()
   jobs:
   - job: LoadTest
